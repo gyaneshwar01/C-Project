@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Currency Converter</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+        box-sizing: border-box;
+        margin-top: 150px;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      select,
+      input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        box-sizing: border-box;
+      }
+
+      .convert-btn {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      .convert-btn:hover {
+        background-color: #0056b3;
+      }
+
+      .result {
+        margin-top: 20px;
+        font-size: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Currency Converter</h1>
+      <div>
+        <label for="amount">Amount in NPR:</label>
+        <input
+          type="number"
+          id="amount"
+          step="0.01"
+          placeholder="Enter amount"
+        />
+      </div>
+      <div>
+        <label for="currency">Select Currency:</label>
+        <select id="currency">
+          <option value="eur">Euro (EUR)</option>
+          <option value="usd">United States Dollar (USD)</option>
+          <option value="jpy">Japanese Yen (JPY)</option>
+          <option value="inr">Indian Rupee (INR)</option>
+        </select>
+      </div>
+      <button class="convert-btn">Convert</button>
+      <div class="result"></div>
+    </div>
+
+    <script>
+      const convertButton = document.querySelector(".convert-btn");
+      const resultDiv = document.querySelector(".result");
+
+      const conversionRates = {
+        usd: 0.0075,
+        jpy: 1.09,
+        eur: 0.0069,
+        inr: 0.62,
+      };
+
+      convertButton.addEventListener("click", () => {
+        const amountInput = document.getElementById("amount");
+        const currencySelect = document.getElementById("currency");
+        const amount = parseFloat(amountInput.value);
+        const selectedCurrency = currencySelect.value;
+
+        if (isNaN(amount)) {
+          resultDiv.textContent = "Please enter a valid amount";
+          return;
+        }
+
+        if (!conversionRates[selectedCurrency]) {
+          resultDiv.textContent = "Invalid currency selected";
+          return;
+        }
+
+        const convertedAmount = (
+          amount * conversionRates[selectedCurrency]
+        ).toFixed(2);
+
+        resultDiv.textContent = `${amount} NPR is approximately ${convertedAmount} ${selectedCurrency.toUpperCase()}`;
+      });
+    </script>
+  </body>
+</html>
